@@ -181,6 +181,23 @@ Kernel-level soft-limit enforcement. The dmesg output confirms that the monitor.
 
 ###  Screenshot 7 – Scheduling
 
+**LOW PRIORITY**
+
+<img width="975" height="196" alt="image" src="https://github.com/user-attachments/assets/071b43e3-dc2a-46ab-b19f-bfec62cd7d07" />
+
+
+**HIGH PRIORITY**
+
+<img width="975" height="148" alt="image" src="https://github.com/user-attachments/assets/d4844297-92b8-430d-b78e-052dc32737ce" />
+
+
+
+<img width="975" height="696" alt="image" src="https://github.com/user-attachments/assets/26fcef1e-0a35-4c8b-a996-219c21c0569c" />
+
+
+
+These screenshots analyze the differential treatment of workloads by the Linux Completely Fair Scheduler (CFS). By deploying two cpu_hog processes with different "Nice" values, the top output clearly shows that the high-priority container (lower nice value) is allocated a significantly larger percentage of CPU cycles compared to the low-priority container, proving successful resource prioritization.
+
 **CPU**:
 
 <img width="940" height="581" alt="image" src="https://github.com/user-attachments/assets/8bc15b9a-7e87-4b69-9adf-006d57e4ad68" />
@@ -189,7 +206,7 @@ Kernel-level soft-limit enforcement. The dmesg output confirms that the monitor.
 
 <img width="820" height="531" alt="image" src="https://github.com/user-attachments/assets/a0426c3c-71c8-4c09-9e6d-3b20e0e51485" />
 
-These screenshots analyze the differential treatment of workloads by the Linux Completely Fair Scheduler (CFS). By deploying two cpu_hog processes with different "Nice" values, the top output clearly shows that the high-priority container (lower nice value) is allocated a significantly larger percentage of CPU cycles compared to the low-priority container, proving successful resource prioritization.
+
 
 
 ---
