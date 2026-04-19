@@ -89,18 +89,29 @@ The system is capable of:
 - Multiple containers (ALPHA, BETA) created
 - Each has isolated PID and mount namespace
 
+
 Clean Workspace
+
   <img width="940" height="69" alt="image" src="https://github.com/user-attachments/assets/7137768d-4465-485f-9b57-f4c7e6960961" />
+
 Alpha and Beta have the Alpine Linux structure inside them
+
 <img width="940" height="96" alt="image" src="https://github.com/user-attachments/assets/013c82cd-c30d-4a94-846a-b4585077d48d" />
 
+
 Supervisor process initialized in Terminal 1, successfully spawning isolated container processes with unique PIDs and namespaces.
+
 <img width="940" height="72" alt="image" src="https://github.com/user-attachments/assets/fd7c6424-c923-44d0-987c-54087aa95e86" />
+
 Supervisor initialized using rootfs-base. The process enters a listening state, ready to manage multiple concurrent containers
+
 <img width="940" height="63" alt="image" src="https://github.com/user-attachments/assets/c49238c4-b525-46a4-afb4-ae3b2a4641d5" />
 
+
 <img width="940" height="27" alt="image" src="https://github.com/user-attachments/assets/6b97e48a-5245-43d3-9858-ea180bb47166" />
+
 <img width="940" height="78" alt="image" src="https://github.com/user-attachments/assets/41fd6393-28e4-4450-b364-dd2116fab1b3" />
+
 Two containers running under one supervisor process
 The presence of two distinct containers (ALPHA and BETA) proves that use of the clone() system call with CLONE_NEWPID and CLONE_NEWNS is successfully creating isolated process trees and mount points. This ensures that processes inside the container cannot see or interfere with processes on the host
 
@@ -110,20 +121,29 @@ The presence of two distinct containers (ALPHA and BETA) proves that use of the 
 
 ### Screenshot 2 – CLI & IPC
 
+
 <img width="940" height="90" alt="image" src="https://github.com/user-attachments/assets/3af8fe8e-2682-4d2b-bd22-718d7323ed68" />
+
 <img width="940" height="32" alt="image" src="https://github.com/user-attachments/assets/f6f4757c-ac8d-4744-913c-d9bfeaf818a3" />
+
 
 This screenshot confirms the communication layer between the user and the supervisor. It shows a command being issued from the client terminal which is then intercepted by the supervisor via a Unix Domain Socket (/tmp/mini_runtime.sock). The log proves that the Inter-Process Communication (IPC) protocol is correctly handling requests in real-time.
 
 ---
 
 ### Screenshot 3 – Logging SystemBounded-buffer logging:
+
 Log file contents captured through the logging pipeline, and evidence of the pipeline operating
 To prevent the supervisor from being overwhelmed by high-volume output from containers, a Bounded-Buffer mechanism is employed. This architecture prevents "blocking" where a container would pause execution if its output buffer was full, ensuring that the engine remains responsive even under heavy logging workloads.
+
  The screenshots of the log files demonstrate that even when processes are running inside restricted namespaces, their output is successfully piped back to the host and stored for auditing.
+
 <img width="940" height="287" alt="image" src="https://github.com/user-attachments/assets/860dc7e8-7079-42e3-a507-375756eec624" />
-STDERR Error:
+
+**STDERR Error**:
+
 <img width="940" height="180" alt="image" src="https://github.com/user-attachments/assets/cb83657d-42be-4eab-948b-173236388da5" />
+
 
 
 ---
@@ -133,46 +153,65 @@ STDERR Error:
 The metadata registry is the "brain" of the supervisor.
 
 The ps table displays active containers, their host PIDs, current states, and assigned memory thresholds. This confirms that the supervisor is correctly maintaining a metadata registry of all running instances and their resource constraints.
+
 <img width="940" height="114" alt="image" src="https://github.com/user-attachments/assets/e23d34e7-0e66-4cea-89b4-3282cd0e2678" />
+
 <img width="936" height="72" alt="image" src="https://github.com/user-attachments/assets/a49f2b88-3f01-48c5-a178-cb21ef126d13" />
+
 
 
 ---
 
 ### Screenshot 5 & 6 – Memory Limits
+
 Soft-limit warning and hard limit warning
 dmesg or log output showing a soft-limit warning event for a container.
 
 **Workload Setup**:
 
+
 **TERMINAL 1**
+
 
 <img width="809" height="55" alt="image" src="https://github.com/user-attachments/assets/40190e1b-c869-4ee3-aecc-5f97fafa826e" />
 
+
 <img width="940" height="94" alt="image" src="https://github.com/user-attachments/assets/2aba1da2-d56e-4ae8-a0b6-3e73f32fa9ac" />
+
 
 <img width="789" height="117" alt="image" src="https://github.com/user-attachments/assets/c8fa9c2f-019c-45fd-91c9-248fdf110ba7" />
 
+
 <img width="940" height="82" alt="image" src="https://github.com/user-attachments/assets/7c3f5c33-f312-456e-8272-93b55dac647b" />
 
+
 <img width="940" height="88" alt="image" src="https://github.com/user-attachments/assets/4fafcdde-07e8-4d3d-b58f-48b93273db40" />
+
 
 
 **TERMINAL 2**
 
 **Multi-Workload Setup**
+
 <img width="940" height="133" alt="image" src="https://github.com/user-attachments/assets/5b1e7dc6-7303-4306-ac63-738bc5383130" />
 
+
 <img width="940" height="183" alt="image" src="https://github.com/user-attachments/assets/f3a9f89a-611a-45d7-b06a-ae378e02bfc9" />
+
 Workload Initialization. Deployment of CPU-intensive and I/O-intensive workloads to observe differential treatment by the Linux scheduler.
+
 
 Soft-limit warning and hard limit warning:
 
+
 <img width="940" height="305" alt="image" src="https://github.com/user-attachments/assets/f42ba178-f5d4-4aa8-b213-552226059803" />
+
 
 <img width="940" height="301" alt="image" src="https://github.com/user-attachments/assets/624296c0-6338-4360-bd4e-eb3069aaa464" />
 
+
 <img width="1043" height="612" alt="image" src="https://github.com/user-attachments/assets/18dd1456-e96f-454e-adbe-4d07587a802d" />
+
 
  
 Kernel-level soft-limit enforcement. The dmesg output confirms that the monitor.ko module has detected the container exceeding its soft memory threshold and has issued a kernel warning without terminating the process.
