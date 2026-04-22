@@ -6,8 +6,8 @@
 
 | **Name**                 | **SRN**          |
 |--------------------------|------------------|
-| Devika N                 | PES1UG24AM080    |
 | Dabbugunta Venya Anand   | PES1UG24AM074    |
+| Devika N                 | PES1UG24AM080    |
 
 </div>
 
