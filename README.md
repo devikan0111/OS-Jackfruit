@@ -1,5 +1,16 @@
 # Mini Container Runtime (Jackfruit OS Project)
 
+## Team Details
+<div align="left">
+
+| **Name**                 | **SRN**          |
+|--------------------------|------------------|
+| Devika N                 | PES1UG24AM080    |
+| Dabbugunta Venya Anand   | PES1UG24AM074    |
+
+</div>
+
+
 ##  Project Overview
 This project implements a **lightweight Linux container runtime in C** with a long-running supervisor and kernel-level monitoring.
 
